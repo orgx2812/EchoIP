@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="./assets/img/favicon.png">
+    <title>EchoIP - IP</title>
+</head>
+
+<script src="https://cdn.staticfile.org/jquery/1.11.0/jquery.min.js"></script>
+<script src="assets/js/jquery.qrcode.min.js"></script>
+<script src='assets/mapbox/mapbox-gl.js'></script>
+<script src="assets/js/main.min.js"></script>
+<link href='assets/mapbox/mapbox-gl.min.css' rel='stylesheet' />
+<link href="assets/css/main.min.css" rel="stylesheet" />
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: -1090;
+    }
+
+    .mapboxgl-ctrl {
+        display: none !important;
+    }
+    
+    #title {
+        margin-top: 0px;
+        margin-bottom: 20px;
+    }
+    
+    #title a {
+        text-decoration: none;
+        color: #555;
+        transition: all 0.6s;
+    }
+    
+    #title a:hover {
+        color: #5165db;
+    }
+
+    .input {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .table {
+        color: #282828;
+    }
+
+    #loc a,
+    #as a {
+        text-decoration: none;
+        color: #282828;
+        transition: all 0.6s;
+    }
+    
+    #loc a:hover,
+    #as a:hover {
+        color: #2d87ee;
+    }
+
+    #ip {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+
+    #scope {
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+
+    .positioncontrol {
+        position: absolute;
+        left: calc(80vw - 180px);
+        transform: translate(-20%, 0);
+    }
+    
+    @media screen and (max-width: 800px) {
+        .positioncontrol {
+            position: absolute;
+            transform: translate(0, 0);
+        }
+    }
+
+    @media all and (orientation : portrait) {
+        .positioncontrol {
+            position: absolute;
+            transform: translate(0, 0);
+        }
+    }
+
+    #output {
+        background-color: rgba(255, 255, 255, 0.92);
+    }
+
+    @supports ((-webkit-backdrop-filter: saturate() blur()) or (backdrop-filter: saturate() blur())) {
+        #output {
+            background-color: rgba(255, 255, 255, 0.6);
+            -webkit-backdrop-filter: saturate(150%) blur(10px);
+            backdrop-filter: saturate(150%) blur(10px);
+        }
+    }
+
+    #share {
+        position: absolute;
+    }
+
+    #qrcode {
+        padding: 10px;
+        margin-bottom: 0;
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+
+    #qrcode canvas {
+        display: block;
+    }
+</style>
+
+<body>
+    <div class="hero is-fullheight is-app-grey mapbox-hero">
+        <div class="hero-body" style="padding: 0;">
+            <div class="has-text-centered is-subheader-caption positioncontrol" style="padding-bottom: 0;">
+                <div id="output" class="contact-page-form flex-card">
+                    <h3 id="title">
+                        <a href="https://github.com/orgx2812/EchoIP" target="_blank" title="Source code on Github">EchoIP</a>
+                    </h3>
+                    <div class="columns is-multiline">
+                        <div class="column">
+                            <div class="field">
+                                <div class="control">
+                                    <input type="text" placeholder="Search here." class="input is-medium">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field">
+                                <div class="control">
+                                    <button type="button" class="button button-cta primary-btn no-lh is-bold raised is-fullwidth">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="table">
+                        <table class="table" style="background-color: transparent;">
+                            <tr>
+                                <td>IP</td>
+                                <td id="ip"></td>
+                            </tr>
+                            <tr>
+                                <td>AS</td>
+                                <td id="as"></td>
+                            </tr>
+                            <tr>
+                                <td>City</td>
+                                <td id="city"></td>
+                            </tr>
+                            <tr>
+                                <td>Region</td>
+                                <td id="region"></td>
+                            </tr>
+                            <tr>
+                                <td>Country</td>
+                                <td id="country"></td>
+                            </tr>
+                            <tr>
+                                <td>Timezone</td>
+                                <td id="timezone"></td>
+                            </tr>
+                            <tr>
+                                <td>Location</td>
+                                <td id="loc"></td>
+                            </tr>
+                            <tr>
+                                <td>ISP</td>
+                                <td id="isp"></td>
+                            </tr>
+                            <tr>
+                                <td>Scope</td>
+                                <td id="scope"></td>
+                            </tr>
+                            <tr>
+                                <td>Detail</td>
+                                <td id="detail"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="share">
+                <a id="qrcode" href="#" class="contact-page-form flex-card"></a>
+            </div>
+            <div id='map'></div>
+        </div>
+    </div>
+</body>
+
+</html>
